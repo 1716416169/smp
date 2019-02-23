@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 public interface UserService {
     public Page<User> selectUser(Integer page,Integer size);
     public User insertUser(User user);
-    public User updataUser(User user);
+    public User updataUser(User user,Integer id);
     public User deleteUser(Integer id);
 
 }

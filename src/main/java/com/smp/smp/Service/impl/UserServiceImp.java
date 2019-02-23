@@ -7,6 +7,7 @@ import net.bytebuddy.description.type.TypeDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +24,9 @@ public class UserServiceImp implements UserService
     User_repository user_repository;
     @Override
     public Page<User> selectUser(Integer page,Integer size) {
-        PageRequest of = PageRequest.of(page, size, Sort.Direction.ASC);
+        page-=1;
+        Sort orders = new Sort(Sort.Direction.ASC,"number");
+        Pageable of = PageRequest.of(page, size,orders);
         Page<User> all = user_repository.findAll(of);
         return all;
     }
@@ -35,7 +38,8 @@ public class UserServiceImp implements UserService
     }
 
     @Override
-    public User updataUser(User user) {
+    public User updataUser(User user,Integer id) {
+        user.setId(id);
         User save = user_repository.save(user);
         return save;
     }
